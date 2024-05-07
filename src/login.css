@@ -1,11 +1,36 @@
 body, html {
-    height: 100%;
     margin: 0;
     font-family: Arial, sans-serif;
+    height: 100%;
+    overflow-x: hidden;
 }
 
 .background-image {
-    background-image: url('/img/bibliotecafundo.jpg'); 
+    background-image: url('/img/bibliotecafundo.jpg');
+    filter: blur(8px);
+    -webkit-filter: blur(8px);
+    position: absolute; /*rolagem */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: -1;
+}
+
+.login-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.background-image {
+    background-image: url('/img/bibliotecafundo.jpg');
     filter: blur(8px);
     -webkit-filter: blur(8px);
     height: 100%;
@@ -17,12 +42,12 @@ body, html {
     z-index: -1;
 }
 
-
 .login-container {
-    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
+    height: 100%;
+    z-index: 2;
 }
 
 .login-form {
@@ -30,10 +55,7 @@ body, html {
     padding: 20px;
     border-radius: 40px;
     width: 400px;
-    height: 57%;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    align-items: center;
-    justify-content: center;
     text-align: center;
 }
 
@@ -90,26 +112,61 @@ button:hover {
 }
 
 
+/* Estilos Base */
 .footer {
-    position: absolute;
-    bottom: 0;
     width: 100%;
     background-color: #f1f1f1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     padding: 10px;
-    display: flex; /* Adiciona flexbox ao contêiner do rodapé */
-    justify-content: space-between; /* Distribui o espaço entre os itens */
-    align-items: center; /* Alinha os itens verticalmente no centro */
+    box-sizing: border-box;
 }
 
 .footer-section {
-    width: 50%; /* Cada seção ocupa 50% da largura do rodapé */
-    text-align: center; /* Centraliza o texto dentro de cada seção */
+    width: 100%;
+    text-align: center;
+    padding: 5px;
 }
 
 .footer-section p {
-    line-height: 1.6; /* Aumenta o espaçamento das linhas */
+    line-height: 1.6; 
 }
 
 .footer-section h3 {
-    margin: 0 0 5px 0; /* Ajusta a margem do título para um espaçamento melhor */
+    margin: 0 0 5px 0; 
+}
+
+@media (min-width: 601px) {
+    .footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        flex-direction: row;
+        justify-content: space-between; 
+        padding: 10px 20px; 
+    }
+
+    .footer-section {
+        width: 50%; 
+        padding: 10px; 
+        box-sizing: border-box;
+    }
+
+    body, html {
+        overflow-x: hidden;
+        height: 100vh;
+    }
+}
+
+/* Mobile Specific Styles */
+@media (max-width: 600px) {
+    body, html {
+        height: auto; 
+    }
+
+    .login-container {
+        min-height: 100vh; /* Garante que o container de login cubra a tela inicialmente */
+    }
 }
