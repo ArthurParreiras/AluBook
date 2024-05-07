@@ -1,2 +1,2 @@
 # AluBook
-AluBook: Sistema de Empréstimo de Livros
+AluBook: Sistema de Empréstimo de Livros fofinhos
