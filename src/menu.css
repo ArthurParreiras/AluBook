@@ -1,0 +1,165 @@
+/* Reset básico para margens e paddings, e configuração da box model */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilos básicos para o corpo da página */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%; /* Garante que o html e o body ocupem toda a largura da viewport */
+    height: 100%; /* Garante que o html e o body ocupem toda a altura da viewport */
+    font-family: Arial, sans-serif; /* Define a fonte para toda a página */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-size: cover; /* Cobertura total da tela */
+}
+
+
+/* Estilização do container principal */
+.container {
+    width: 100%;
+    max-width: 1200px; /* Limita a largura máxima do container */
+    padding: 20px; /* Espaço interno para não colar nos bordos da janela */
+    box-sizing: border-box; /* Inclui padding na largura e altura total */
+    height: 80%;
+    display: flex;
+    flex-direction: row; /* Disposição horizontal dos cards */
+    justify-content: space-around; /* Distribui os cards uniformemente */
+    align-items: center; /* Centraliza os cards verticalmente */
+}
+
+
+/* Configuração para os cards */
+.cards {
+    display: flex;
+    flex-wrap: row; /* Permite que os cards se ajustem conforme o espaço disponível */
+    justify-content: space-around; /* Espaça os cards uniformemente */
+    width: 100%;
+    margin: 20px 0; /* Espaço vertical para separar os cards de outros elementos */
+}
+
+/* Estilos específicos para cada card */
+.card {
+    background: rgba(255, 255, 255, 0.9); /* Fundo semi-transparente para destacar sobre o fundo */
+    border-radius: 8px;
+    height: 80%;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    padding: 70px;
+    margin: 10px;
+    width: 25%; /* Define uma largura específica para cada card */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+/* Estilos para os itens clicáveis dentro dos cards */
+.card-item {
+    padding-bottom: 20px;
+    padding-top: 20px;
+    margin: 8px 0;
+    background-color: #fac67d;
+    border-radius: 4px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    color: black;
+    transition: background-color 0.3s;
+}
+
+.card-item:hover {
+    background-color: #000000;
+    color: #fac67d;
+}
+
+.card h2 {
+    width: 100%; /* Ocupa toda a largura do card */
+    text-align: center; /* Centraliza o texto horizontalmente */
+    margin: 0 0 10px 0; /* Ajusta a margem inferior para distanciar do primeiro item */
+    padding-top: 10px; /* Espaço no topo para aproximar da borda superior */
+    font-size: 24px; /* Tamanho da fonte para maior destaque */
+}
+
+/* Media queries para ajustar o layout em dispositivos móveis */
+@media (max-width: 900px) {
+    .cards {
+        flex-direction: column; /* Coloca os cards em coluna em telas menores */
+    }
+    .card {
+        width: 80%; /* Aumenta a largura dos cards para melhor leitura em telas menores */
+    }
+}
+@media (min-width: 600px) {
+    .cards {
+        flex-direction: row; /* Cards lado a lado em telas maiores */
+        justify-content: space-around; /* Espaça os cards uniformemente */
+    }
+    .card {
+        width: 45%; /* Largura dos cards em telas maiores */
+        margin: 10px; /* Margem entre os cards */
+    }
+}
+    @media (max-width: 600px) {
+        html, body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-size: cover; /* Cobertura total da tela */
+        }
+
+        .container {
+            height: auto; /* Permite que o container cresça com o conteúdo */
+            display: block; /* Troca a disposição flex para block para fluxo natural */
+            padding: 10px 0; /* Aumenta o padding para espaçamento adequado */
+        }
+
+        .cards {
+            flex-direction: column; /* Empilha os cards verticalmente */
+            align-items: center; /* Centraliza os cards horizontalmente */
+            width: 100%; /* Utiliza a largura total disponível */
+            overflow: visible; /* Remove qualquer limitação de overflow */
+        }
+
+        .card {
+            width: 90%; /* Ajusta a largura dos cards para cobrir mais espaço */
+            margin: 20px; /* Espaçamento entre os cards */
+            height: auto; /* Altura automática baseada no conteúdo */
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.767);
+        }
+
+        .card-item {
+            padding: 15px; /* Aumenta o padding para botões maiores */
+            margin: 15px 0; /* Aumenta a margem para mais espaço entre botões */
+            font-size: 18px; /* Aumenta o tamanho da fonte para facilitar a leitura */
+            background-color: #ac8c84; /* Cor de fundo */
+            width: 100%; /* Garante que o botão ocupe toda a largura disponível */
+        }
+
+        .card-item:hover {
+            background-color: #925c47; /* Cor de fundo mais escura no hover */
+        }
+
+        .card-item:active {
+            background-color: #7a4736; /* Cor quando o botão é pressionado */
+        }
+
+        .footer {
+            width: 100%; /* Ajusta a largura para cobrir toda a largura da tela */
+            background-color: #f1f1f1; /* Cor de fundo do rodapé */
+            padding: 10px 0; /* Padding vertical para melhorar a legibilidade */
+            text-align: center; /* Centraliza o texto no rodapé */
+            box-sizing: border-box; /* Garante que o padding seja incluído na altura total */
+            position: relative; /* Garante que o rodapé siga o fluxo normal do documento */
+        }
+    }
+
+    /* Estilos adicionais para garantir que o rodapé siga o conteúdo */
+    .footer {
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Centraliza o conteúdo do rodapé horizontalmente */
+    }
