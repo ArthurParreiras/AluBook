@@ -36,7 +36,7 @@
 }
 
 .background-image {
-    background-image: url('/img/bibliotecafundo.jpg');
+    background-image: url('https://ibb.co/ZSdLx3Z');
     filter: blur(8px);
     -webkit-filter: blur(8px);
     position: absolute; /* Mudei para absolute para permitir rolagem */
