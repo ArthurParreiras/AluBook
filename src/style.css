@@ -20,19 +20,19 @@
     margin-left: 40px;
 }
 
-#logoutButton {
-    padding: 5px 15px; /* Padding no botão para torná-lo mais clicável */
-    background-color: #A52A2A; /* Um tom de marrom mais escuro para o botão */
-    color: white; /* Cor do texto do botão */
-    border: none; /* Remove a borda padrão do botão */
-    border-radius: 5px; /* Bordas arredondadas para o botão */
+.button {
+    display: inline-block;
+    padding: 8px 15px;
+    background-color: #A52A2A; /* Um tom de marrom mais escuro */
+    color: white;
+    text-align: center;
+    border-radius: 5px;
+    text-decoration: none; /* Remove sublinhado de links */
     cursor: pointer; /* Muda o cursor para indicar clicabilidade */
-    transition: background-color 0.2s; /* Suaviza a transição de cor */
-    margin-right: 40px;
 }
 
-#logoutButton:hover {
-    background-color: #800000; /* Cor de hover para o botão */
+.button:hover {
+    background-color: #800000; /* Cor de hover mais escura */
 }
 
 .background-image {
@@ -94,6 +94,7 @@
 
     body, html {
         overflow-x: hidden;
+        overflow-y: hidden;
         height: 100vh;
     }
     
@@ -102,7 +103,29 @@
 @media (max-width: 600px) {
     body, html {
         height: auto; /* Permite que o conteúdo defina a altura */
+        min-height: 100%; /* Garante que o corpo seja pelo menos tão alto quanto a janela */
+        position: relative;
+        min-height: 100%; /* Garante que o corpo ocupe toda a altura */
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
     }
+    
+    .background-image {
+        position: fixed; /* Fixa a imagem de fundo */
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1; /* Mantém a imagem atrás de todos os outros elementos */
+        background-image: url('/img/bibliotecafundo.jpg');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        filter: blur(8px);
+        -webkit-filter: blur(8px);
+    }
+
     .user-bar {
         flex-direction: row; /* Empilha os elementos verticalmente */
         align-items: center; /* Centraliza os elementos horizontalmente */
@@ -126,5 +149,23 @@
         font-size: 16px; /* Tamanho de fonte confortável para o botão */
         margin-bottom: 5px; /* Margem na parte inferior para separar do conteúdo abaixo */
         text-align: center; /* Centraliza o texto dentro do botão */
+    }
+
+    .footer {
+        position: fixed; /* Fixa o rodapé na parte inferior */
+        bottom: 0; /* Alinha o rodapé na parte inferior da página */
+        left: 0; /* Alinha à esquerda */
+        width: 100%; /* Faz com que o rodapé ocupe toda a largura */
+        padding: 10px 0; /* Padding para manter um espaço interno suficiente */
+        background-color: #f1f1f1c5; /* Cor de fundo clara para visibilidade */
+        box-sizing: border-box; /* Inclui o padding no cálculo da largura */
+        z-index: 1000; /* Garante que o rodapé fique acima da imagem de fundo */
+    }
+
+    .footer-section {
+        width: 100%; /* Ajusta cada seção para ocupar toda a largura do rodapé */
+        padding: 5px; /* Espaço interno suficiente para conteúdo */
+        box-sizing: border-box; /* Garante que o padding seja calculado na largura */
+        text-align: center;
     }
 }
