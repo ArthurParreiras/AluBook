@@ -14,19 +14,6 @@ body, html {
     box-sizing: border-box;
 }
 
-.background-image {
-    background-image: url('/img/bibliotecafundo.jpg');
-    filter: blur(8px);
-    -webkit-filter: blur(8px);
-    height: 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    position: fixed;
-    width: 100%;
-    z-index: -1;
-}
-
 .login-container {
     display: flex;
     align-items: center;
