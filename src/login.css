@@ -98,4 +98,7 @@ button:hover {
     .login-container {
         min-height: 100vh; /* Garante que o container de login cubra a tela inicialmente */
     }
+    .login-form{
+        margin-bottom: 70%;
+    }
 }
