@@ -85,20 +85,6 @@ html, body {
     font-size: 36px; /* Tamanho da fonte para maior destaque */
     color: rgb(0, 0, 0);
 }
-.button {
-    display: inline-block;
-    padding: 8px 15px;
-    background-color: #A52A2A; /* Um tom de marrom mais escuro */
-    color: white;
-    text-align: center;
-    border-radius: 5px;
-    text-decoration: none; /* Remove sublinhado de links */
-    cursor: pointer; /* Muda o cursor para indicar clicabilidade */
-}
-
-.button:hover {
-    background-color: #800000; /* Cor de hover mais escura */
-}
 
 /* Media queries para ajustar o layout em dispositivos móveis */
 @media (max-width: 900px) {
@@ -165,20 +151,4 @@ html, body {
         .card-item:active {
             background-color: #7a4736; /* Cor quando o botão é pressionado */
         }
-
-        .footer {
-            width: 100%; /* Ajusta a largura para cobrir toda a largura da tela */
-            background-color: #f1f1f1; /* Cor de fundo do rodapé */
-            /* Padding vertical para melhorar a legibilidade */
-            text-align: center; /* Centraliza o texto no rodapé */
-            box-sizing: border-box; /* Garante que o padding seja incluído na altura total */
-            position: relative; /* Garante que o rodapé siga o fluxo normal do documento */
-        }
-    }
-
-    /* Estilos adicionais para garantir que o rodapé siga o conteúdo */
-    .footer {
-        display: flex;
-        flex-direction: column;
-        align-items: center; /* Centraliza o conteúdo do rodapé horizontalmente */
     }

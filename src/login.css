@@ -98,21 +98,6 @@ button:hover {
 }
 
 @media (min-width: 601px) {
-    .footer {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        flex-direction: row; /* Muda para row para alinhar lado a lado */
-        justify-content: space-between; /* Espaça as seções nas extremidades do rodapé */
-        padding: 10px 20px; /* Aumenta o padding lateral para melhor aparência */
-    }
-
-    .footer-section {
-        width: 50%; /* Ajusta cada seção para ocupar metade do rodapé */
-        padding: 10px; /* Ajusta o padding para mais espaço interno */
-        box-sizing: border-box;
-    }
 
     body, html {
         overflow-x: hidden;
