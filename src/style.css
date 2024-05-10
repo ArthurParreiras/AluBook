@@ -169,3 +169,28 @@
         text-align: center;
     }
 }
+
+/* Estilo para o contêiner do botão */
+.container-botao {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+/* Estilo para o botão */
+.btn {
+    padding: 10px 30px;
+    background-color: rgb(50, 217, 50);
+    color: white;
+    border: 0;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: rgb(30, 187, 30);
+}
+
+
+  
