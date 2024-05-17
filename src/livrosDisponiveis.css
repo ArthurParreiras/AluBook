@@ -15,7 +15,7 @@ html, body {
 }
 
 .container-livros {
-    opacity: 0.8;
+    opacity: 0.9;
     background-color: #f2f2f2;
     width: 70%;
     height: 70%;
@@ -28,7 +28,6 @@ html, body {
 
 .container-livros h1{
     padding: 15px;
-    font-style: italic;
 }
 
 .display-livros {

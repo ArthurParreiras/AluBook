@@ -47,7 +47,7 @@ html, body {
 
 /* Estilos específicos para cada card */
 .card {
-    background: rgba(248, 248, 248, 0.89); /* Fundo semi-transparente para destacar sobre o fundo */
+    background: rgba(248, 248, 248, 0.9); /* Fundo semi-transparente para destacar sobre o fundo */
     border-radius: 8px;
     height: 80%;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
@@ -63,7 +63,8 @@ html, body {
     padding-bottom: 20px;
     padding-top: 20px;
     margin: 8px 0;
-    background-color: #fcc06d;
+    background-color: #fcd49cd5;
+    opacity: 0.9;
     border-radius: 4px;
     font-weight: bold;
     text-align: center;
