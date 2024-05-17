@@ -3,32 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consulta de Cliente</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="consultarCliente.css"> <!-- Adicionando o arquivo CSS -->
-    <link rel="stylesheet" href="livrosDisponiveis.css">
+    <title>Consultar Cliente</title>
+    <link rel="stylesheet" href="consultarCliente.css">
+    <link rel="stylesheet" href="style.css"> 
 </head>
 <body>
     <header>
         <div class="user-bar">
-            <span class="label-user">Usuário:</span> <span id="username"> Arthur Parreiras</span>
+            <span class="label-user">Usuário:</span> <span id="username">Matheus Duarte</span>
             <a href="login.html" id="logoutButton" class="button">Sair</a>
         </div>
     </header>
-
+    
     <div class="background-image"></div>
-    <div class="container-consulta">
-        <h1 class="titulo">Consultar Cliente</h1>
-        <div class="consulta-container">
-            <label for="cpfInput">CPF do Cliente:</label>
-            <input type="text" id="cpfInput" placeholder="Digite o CPF do cliente">
-            <button type="button" class="btn btn-lg rounded-pill" onclick="consultarCliente()">
-                Consultar
+    <main>
+        <div class="box1">
+            <h1>Consultar Cliente</h1>
+            <div class="input-group">
+                <label for="cpf">CPF Cliente:</label>
+                <input type="text" id="cpf" />
+            </div>
+        </div>
+        <div class="container-botao">
+            <button type="button" class="btn btn-lg rounded-pill">
+                Salvar
             </button>
         </div>
-        <div id="resultadoConsulta" class="resultado"></div>
-    </div>
-
+    </main>
+    
     <div class="footer">
         <div class="footer-section">
             <h3>Endereço</h3>
@@ -39,9 +41,5 @@
             <p>alubook@gmail.com <br>(31) 9 1234-5678</p>
         </div>
     </div>
-    <script src="script.js"></script>
 </body>
 </html>
-
-
-
