@@ -18,7 +18,7 @@ body, html {
 
 
 .login-form {
-    background-color: rgb(247, 247, 247);
+    background-color: rgb(247, 247, 247, 0.9);
     padding: 20px;
     border-radius: 40px;
     width: 400px;
@@ -54,9 +54,9 @@ button {
     font-weight: bold;
     padding: 14px 20px;
     margin: 8px 0;
-
     border-radius: 10px;
     cursor: pointer;
+    border-style: none;
     width: 47%;
     height: 53px;
     font-size: 18px;
