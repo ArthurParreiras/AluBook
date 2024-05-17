@@ -168,16 +168,18 @@
 /* Estilo para o botão */
 .btn {
     padding: 10px 30px;
-    background-color: rgb(50, 217, 50);
+    background-color: #fcd49c;
     color: white;
     border: 0;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    margin-right: 280px;
+    
 }
 
 .btn:hover {
-    background-color: rgb(30, 187, 30);
+    opacity: 0.8;
 }
 
 

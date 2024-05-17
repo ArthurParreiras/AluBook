@@ -1,10 +1,10 @@
 .background-image {
-    position: fixed; /* Fixa a imagem de fundo */
+    position: fixed; 
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1; /* Mantém a imagem atrás de todos os outros elementos */
+    z-index: -1; 
     background-image: url('/img/bibliotecafundo.jpg');
     background-position: center;
     background-repeat: no-repeat;
@@ -13,10 +13,10 @@
     -webkit-filter: blur(8px);
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 html, body {
@@ -54,20 +54,20 @@ input[type="text"] {
 main {
     position: relative;
     width: 100%;
-    height: calc(100% - 50px); /* Subtrai a altura do header */
+    height: calc(100% - 50px); 
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    padding-top: 10%; /* Espaço do topo para centralização */
+    padding-top: 10%; 
 }
 
 .box1 {
     width: 100%;
     max-width: 700px;
     text-align: center;
-    padding: 20px; /* Espaçamento interno */
-    border-radius: 10px; /* Bordas arredondadas */
-    background-color: rgba(255, 255, 255, 0.7); /* Fundo branco semi-transparente */
+    padding: 20px; 
+    border-radius: 10px; 
+    background-color: rgba(255, 255, 255, 0.7); 
     height: 300px;
 }
 
@@ -75,10 +75,4 @@ main {
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-.container-botao {
-    position: absolute;
-    bottom: 20%;
-    right: 10%;
 }
