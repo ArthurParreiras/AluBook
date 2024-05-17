@@ -1,3 +1,12 @@
+html, body {
+    margin: 0;
+    padding: 0 !important;
+    width: 100%; /* Garante que o html e o body ocupem toda a largura da viewport */
+    height: 100%; /* Garante que o html e o body ocupem toda a altura da viewport */
+    font-family: Arial, sans-serif; /* Define a fonte para toda a página */
+    max-width: 100vw; /* Limita a largura máxima ao viewport */
+    overflow-x: hidden; /* Oculta o overflow horizontal */
+}
 .user-bar {
     background-color: #fcc06d;
     color: rgb(0, 0, 0);
@@ -180,10 +189,14 @@
 
 /* Estilo para o botão */
 .btn {
-    padding: 10px 30px;
+    padding: 16px 50px;
     background-color: #fcc06d;
-    color: white;
+    color: black;
+    font-weight: bold;
     border: 0;
+    font-size: large;
+    margin-top: 30px;
+    margin-bottom: 15px;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
@@ -202,12 +215,12 @@
     box-sizing: border-box;
     z-index: 2;
     height: 100%;
-    margin-top: 85px; /* Adicionado espaço entre o cabeçalho e o contêiner */
+    margin-top: 10%; /* Adicionado espaço entre o cabeçalho e o contêiner */
     
 }
 
 .cadastro-form {
-    background-color: rgb(247, 247, 247);
+    background-color: rgb(247, 247, 247, 0.9);
     padding: 20px;
     border-radius: 40px;
     width: 400px;
