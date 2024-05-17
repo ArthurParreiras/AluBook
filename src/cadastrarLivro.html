@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar Livro</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="livrosDisponiveis.css"> <!-- Adicionando o arquivo CSS -->
+    <link rel="stylesheet" href="cadastrarLivro.css"> <!-- Adicionando o arquivo CSS para cadastrar livro -->
+</head>
+<body>
+    <header>
+        <div class="user-bar">
+            <span class="label-user">Usuário:</span> <span id="username">Arthur Parreiras</span>
+            <a href="login.html" id="logoutButton" class="button">Sair</a>
+        </div>
+    </header>
+
+    <div class="background-image"></div>
+    <div class="container-cadastro">
+        <h1 class="titulo">Cadastrar Livro</h1>
+        <div class="container-box">
+            <label for="autorInput">Nome do Autor:</label>
+            <input type="text" id="autorInput" placeholder="Digite o nome do autor">
+            
+            <label for="livroInput">Nome do Livro:</label>
+            <input type="text" id="livroInput" placeholder="Digite o nome do livro">
+            
+            <label for="idInput">ID do Livro:</label>
+            <input type="text" id="idInput" placeholder="Digite o ID do livro">
+
+            <div class="container-botao">
+                <button type="button" class="btn btn-lg rounded-pill" onclick="cadastrarLivro()">
+                    Cadastrar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="footer-section">
+            <h3>Endereço</h3>
+            <p>R. Rio Comprido, 4580 - Cinco,<br> Contagem - MG, 32265-450</p>            
+        </div>
+        <div class="footer-section">
+            <h3>Contatos</h3>
+            <p>alubook@gmail.com <br>(31) 9 1234-5678</p>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
