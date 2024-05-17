@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Template</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="criarcliente.css">
+    <style>
+      
+        
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="user-bar">
+            <span class="label-user">Usuário:</span> <span id="username">Arthur Parreiras</span>
+            <a href="login.html" id="logoutButton" class="button">Sair</a>
+        </div>
+    </header>
+    <div class="background-image"></div>
+
+    <div class="cadastro-container">
+        <div class="cadastro-form">
+            <h2>Criar um novo cliente</h2>
+            <form class="inputs" action="/submit-your-form-handler" method="POST">
+                <input type="text" placeholder="Nome" name="nome" required>
+                <input type="tel" placeholder="Telefone" name="telefone" required>
+                <input type="text" placeholder="CPF" name="cpf" required>
+                <button type="submit" class="btn">Criar</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="footer-section">
+            <h3>Endereço</h3>
+            <p>R. Rio Comprido, 4580 - Cinco,<br> Contagem - MG, 32265-450</p>
+        </div>
+        <div class="footer-section">
+            <h3>Contatos</h3>
+            <p>alubook@gmail.com <br>(31) 9 1234-5678</p>
+        </div>
+    </div>
+</body>
+
+</html>
