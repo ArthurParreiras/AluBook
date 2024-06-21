@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="livrosDisponiveis.css">
     <link rel="stylesheet" href="style.css"> 
 </head>
-<body >
+<body>
     <header>
         <div class="user-bar">
             <span class="label-user">Usuário:</span> <span id="username"> Arthur Parreiras</span>
@@ -15,105 +15,29 @@
         </div>
     </header>
     <div class="background-image"></div>
-
-        <div class="container-livros">
-            <h1>LIVROS DISPONÍVEIS</h1>
-            <div class="display-livros">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Nome</th>
-                            <th>Autor</th>
-                            <th>Ano</th>
-                            <th>Gênero</th>
-                            <th>Quantidade</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>O Senhor dos Anéis</td>
-                            <td>J.R.R. Tolkien</td>
-                            <td>1954</td>
-                            <td>Fantasia</td>
-                            <td>5</td>
-                        </tr>
-                        <tr>
-                            <td>Harry Potter e a Pedra Filosofal</td>
-                            <td>J.K. Rowling</td>
-                            <td>1997</td>
-                            <td>Fantasia</td>
-                            <td>8</td>
-                        </tr>
-                        <tr>
-                            <td>Cem Anos de Solidão</td>
-                            <td>Gabriel García Márquez</td>
-                            <td>1967</td>
-                            <td>Ficção Literária</td>
-                            <td>3</td>
-                        </tr>
-                        <tr>
-                            <td>A Culpa é das Estrelas</td>
-                            <td>John Green</td>
-                            <td>2012</td>
-                            <td>Romance</td>
-                            <td>10</td>
-                        </tr>
-                        <tr>
-                            <td>1984</td>
-                            <td>George Orwell</td>
-                            <td>1949</td>
-                            <td>Ficção Distópica</td>
-                            <td>6</td>
-                        </tr>
-                        <tr>
-                            <td>Dom Quixote</td>
-                            <td>Miguel de Cervantes</td>
-                            <td>1605</td>
-                            <td>Ficção Literária</td>
-                            <td>4</td>
-                        </tr>
-                        <tr>
-                            <td>A Menina que Roubava Livros</td>
-                            <td>Markus Zusak</td>
-                            <td>2005</td>
-                            <td>Romance</td>
-                            <td>7</td>
-                        </tr>
-                        <tr>
-                            <td>Orgulho e Preconceito</td>
-                            <td>Jane Austen</td>
-                            <td>1813</td>
-                            <td>Romance</td>
-                            <td>9</td>
-                        </tr>
-                        <tr>
-                            <td>O Hobbit</td>
-                            <td>J.R.R. Tolkien</td>
-                            <td>1937</td>
-                            <td>Fantasia</td>
-                            <td>5</td>
-                        </tr>
-                        <tr>
-                            <td>O Grande Gatsby</td>
-                            <td>F. Scott Fitzgerald</td>
-                            <td>1925</td>
-                            <td>Ficção</td>
-                            <td>6</td>
-                        </tr>
-                        <tr>
-                            <td>Moby Dick</td>
-                            <td>Herman Melville</td>
-                            <td>1851</td>
-                            <td>Aventura</td>
-                            <td>4</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+    <div class="container-livros">
+        <h1>LIVROS DISPONÍVEIS</h1>
+        <div class="display-livros">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Autor</th>
+                        <th>Ano</th>
+                        <th>Gênero</th>
+                        <th>Quantidade</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Livros serão exibidos aqui -->
+                </tbody>
+            </table>
         </div>
-    
-    
-    
+        <div class="pagination">
+            <button id="prevPage">Anterior</button>
+            <button id="nextPage">Próxima</button>
+        </div>
+    </div>
     <div class="footer">
         <div class="footer-section">
             <h3>Endereço</h3>
@@ -124,5 +48,6 @@
             <p>alubook@gmail.com <br>(31) 9 1234-5678</p>
         </div>
     </div>
+    <script src="livrosDisponiveis.js"></script>
 </body>
 </html>
