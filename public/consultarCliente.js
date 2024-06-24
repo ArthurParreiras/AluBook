@@ -1,36 +1,35 @@
-// Seleciona o botão de consulta
-const consultarBtn = document.querySelector('.btn');
-
-// Adiciona um ouvinte de evento para o clique no botão de consulta
-consultarBtn.addEventListener('click', () => {
-    // Obtém o valor do CPF digitado pelo usuário
-    const cpfCliente = document.getElementById('cpf').value;
-
-    // Faz a requisição para a API utilizando o CPF do cliente como parâmetro
-    fetch(`http://localhost:3000/api/clientes/${cpfCliente}`)
-        .then(response => {
-            // Verifica se a resposta da requisição foi bem-sucedida
-            if (response.ok) {
-                // Se a resposta foi bem-sucedida, converte-a para JSON
-                return response.json();
-            } else {
-                // Se a resposta não foi bem-sucedida, lança um erro
-                throw new Error('Erro ao consultar cliente');
-            }
+// Função para consultar cliente por CPF
+function consultarClientePorCPF(cpfCliente) {
+    return fetch(`http://localhost:3000/consultar-cliente/${cpfCliente}`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Erro ao consultar cliente');
+        }
+        return response.json();
+      });
+  }
+  
+  // Função para consultar o cliente
+  function consultarCliente() {
+      // Obtém o valor do CPF inserido pelo usuário
+      const cpfCliente = document.getElementById("cpf").value;
+  
+      // Realiza a consulta ao servidor
+      consultarClientePorCPF(cpfCliente)
+        .then(row => {
+          if (row) {
+            // Exibe os dados do cliente na tela
+            document.getElementById("resultado").innerHTML = "<p>Cliente encontrado: " + row.nome_cliente + " - " + row.tel_cliente + "</p>";
+          } else {
+            document.getElementById("resultado").innerHTML = "<p>Cliente não encontrado</p>";
+          }
         })
-        .then(data => {
-            // Verifica se o cliente foi encontrado na base de dados
-            if (data.length > 0) {
-                // Se o cliente foi encontrado, exibe uma mensagem na tela
-                alert('Cliente encontrado!');
-            } else {
-                // Se o cliente não foi encontrado, exibe uma mensagem na tela
-                alert('Cliente não encontrado!');
-            }
-        })
-        .catch(error => {
-            // Se houver algum erro durante o processo, exibe uma mensagem na tela
-            console.error('Erro:', error);
-            alert('Erro ao consultar cliente');
+        .catch(err => {
+          console.error('Erro ao consultar cliente:', err);
+          document.getElementById("resultado").innerHTML = "<p>Ocorreu um erro ao consultar o cliente</p>";
         });
-});
+  }
+  
+  
+
+  

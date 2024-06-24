@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Consultar Cliente</title>
     <link rel="stylesheet" href="consultarCliente.css">
-    <link rel="stylesheet" href="style.css">
-    <script src="consultarCliente.js"></script> 
+    <link rel="stylesheet" href="style.css"> 
 </head>
 <body>
     <header>
@@ -25,10 +24,11 @@
                 <input type="text" id="cpf" />
             </div>
             <div class="container-botao">
-                <button type="button" class="btn btn-lg rounded-pill">
+                <button type="button" class="btn btn-lg rounded-pill" onclick="consultarCliente()">
                     Consultar
                 </button>
             </div>
+            <div id="resultado"></div> <!-- Local onde será exibido o resultado da consulta -->
         </div>
     </main>
 
@@ -42,5 +42,7 @@
             <p>alubook@gmail.com <br>(31) 9 1234-5678</p>
         </div>
     </div>
+
+    <script src="consultarCliente.js"></script> <!-- Adiciona o arquivo de script -->
 </body>
 </html>
