@@ -1,256 +1,121 @@
 const express = require('express');
-const mysql = require('mysql');
+const sqlite3 = require('sqlite3').verbose();
 const bodyParser = require('body-parser');
 const app = express();
 
 app.use(bodyParser.json());
 
-const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '1234',
-  database: 'alubook'
-});
-
-connection.connect(err => {
+// Cria a conexão com o banco de dados SQLite
+const db = new sqlite3.Database('alubook.db', err => {
   if (err) {
-    console.error('Erro ao conectar ao banco de dados:', err.stack);
-    return;
+    console.error('Erro ao abrir o banco de dados:', err.message);
+  } else {
+    console.log('Conectado ao banco de dados SQLite');
+    // Cria as tabelas se elas não existirem
+    db.run(`
+      CREATE TABLE IF NOT EXISTS funcionario (
+        cpf_func TEXT PRIMARY KEY,
+        nome_func TEXT
+      )
+    `);
+    db.run(`
+      CREATE TABLE IF NOT EXISTS cliente (
+        cpf_cliente TEXT PRIMARY KEY,
+        nome_cliente TEXT,
+        tel_cliente TEXT
+      )
+    `);
+    db.run(`
+      CREATE TABLE IF NOT EXISTS cadastro_cliente (
+        cod_cadastro INTEGER PRIMARY KEY AUTOINCREMENT,
+        nome_cliente TEXT,
+        tel_cliente TEXT,
+        FOREIGN KEY (nome_cliente) REFERENCES cliente(nome_cliente),
+        FOREIGN KEY (tel_cliente) REFERENCES cliente(tel_cliente)
+      )
+    `);
+    db.run(`
+      CREATE TABLE IF NOT EXISTS livro (
+        id_livro INTEGER PRIMARY KEY AUTOINCREMENT,
+        nome_livro TEXT,
+        autor_livro TEXT
+      )
+    `);
+    db.run(`
+      CREATE TABLE IF NOT EXISTS reserva (
+        num_reserva INTEGER PRIMARY KEY AUTOINCREMENT,
+        nome_cliente TEXT,
+        cod_cliente INTEGER,
+        data_reserva DATE,
+        data_devol DATE,
+        FOREIGN KEY (nome_cliente) REFERENCES cliente(nome_cliente),
+        FOREIGN KEY (cod_cliente) REFERENCES cliente(cpf_cliente)
+      )
+    `);
+    db.run(`
+      CREATE TABLE IF NOT EXISTS pega_emprestado (
+        num_reserva INTEGER,
+        nome_cliente TEXT,
+        cod_cliente INTEGER,
+        PRIMARY KEY (num_reserva, nome_cliente, cod_cliente),
+        FOREIGN KEY (num_reserva) REFERENCES reserva(num_reserva),
+        FOREIGN KEY (nome_cliente) REFERENCES cliente(nome_cliente),
+        FOREIGN KEY (cod_cliente) REFERENCES cliente(cpf_cliente)
+      )
+    `);
+    db.run(`
+      CREATE TABLE IF NOT EXISTS devolucao (
+        num_reserva INTEGER PRIMARY KEY,
+        nome_cliente TEXT,
+        cod_cliente INTEGER,
+        data_reserva DATE,
+        data_devol DATE,
+        FOREIGN KEY (num_reserva) REFERENCES reserva(num_reserva),
+        FOREIGN KEY (nome_cliente) REFERENCES cliente(nome_cliente),
+        FOREIGN KEY (cod_cliente) REFERENCES cliente(cpf_cliente)
+      )
+    `);
   }
-  console.log('Conectado ao banco de dados como id ' + connection.threadId);
 });
 
-// Rotas para a tabela funcionario
-app.get('/api/funcionarios', (req, res) => {
-  connection.query('SELECT * FROM funcionario', (error, results) => {
-    if (error) throw error;
-    res.json(results);
+// Rota para consultar cliente por CPF
+app.get('/api/clientes/:cpf_cliente', (req, res) => {
+  const cpfCliente = req.params.cpf_cliente;
+  db.get('SELECT * FROM cliente WHERE cpf_cliente = ?', [cpfCliente], (err, row) => {
+    if (err) {
+      console.error('Erro ao consultar cliente:', err.message);
+      res.status(500).send('Erro ao consultar cliente');
+    } else {
+      if (row) {
+        res.json(row);
+      } else {
+        res.status(404).send('Cliente não encontrado');
+      }
+    }
   });
 });
 
-app.post('/api/funcionarios', (req, res) => {
-  const { cpf_func, nome_func } = req.body;
-  connection.query('INSERT INTO funcionario (cpf_func, nome_func) VALUES (?, ?)', [cpf_func, nome_func], (error) => {
-    if (error) throw error;
-    res.status(201).send('Funcionário adicionado com sucesso');
+// Rota para consultar funcionário por CPF
+app.get('/api/funcionarios/:cpf_func', (req, res) => {
+  const cpfFuncionario = req.params.cpf_func;
+  db.get('SELECT * FROM funcionario WHERE cpf_func = ?', [cpfFuncionario], (err, row) => {
+    if (err) {
+      console.error('Erro ao consultar funcionário:', err.message);
+      res.status(500).send('Erro ao consultar funcionário');
+    } else {
+      if (row) {
+        res.json(row);
+      } else {
+        res.status(404).send('Funcionário não encontrado');
+      }
+    }
   });
 });
 
-app.put('/api/funcionarios/:cpf_func', (req, res) => {
-  const { cpf_func } = req.params;
-  const { nome_func } = req.body;
-  connection.query('UPDATE funcionario SET nome_func = ? WHERE cpf_func = ?', [nome_func, cpf_func], (error) => {
-    if (error) throw error;
-    res.send('Funcionário atualizado com sucesso');
-  });
-});
+// Adicione outras rotas e lógica aqui, conforme necessário
 
-app.delete('/api/funcionarios/:cpf_func', (req, res) => {
-  const { cpf_func } = req.params;
-  connection.query('DELETE FROM funcionario WHERE cpf_func = ?', [cpf_func], (error) => {
-    if (error) throw error;
-    res.send('Funcionário deletado com sucesso');
-  });
-});
-
-// Rotas para a tabela cliente
-app.get('/api/clientes', (req, res) => {
-  connection.query('SELECT * FROM cliente', (error, results) => {
-    if (error) throw error;
-    res.json(results);
-  });
-});
-
-app.post('/api/clientes', (req, res) => {
-  const { cpf_cliente, nome_cliente, tel_cliente } = req.body;
-  connection.query('INSERT INTO cliente (cpf_cliente, nome_cliente, tel_cliente) VALUES (?, ?, ?)', [cpf_cliente, nome_cliente, tel_cliente], (error) => {
-    if (error) throw error;
-    res.status(201).send('Cliente adicionado com sucesso');
-  });
-});
-
-app.put('/api/clientes/:cpf_cliente', (req, res) => {
-  const { cpf_cliente } = req.params;
-  const { nome_cliente, tel_cliente } = req.body;
-  connection.query('UPDATE cliente SET nome_cliente = ?, tel_cliente = ? WHERE cpf_cliente = ?', [nome_cliente, tel_cliente, cpf_cliente], (error) => {
-    if (error) throw error;
-    res.send('Cliente atualizado com sucesso');
-  });
-});
-
-app.delete('/api/clientes/:cpf_cliente', (req, res) => {
-  const { cpf_cliente } = req.params;
-  connection.query('DELETE FROM cliente WHERE cpf_cliente = ?', [cpf_cliente], (error) => {
-    if (error) throw error;
-    res.send('Cliente deletado com sucesso');
-  });
-});
-
-// Rotas para a tabela cadastro_cliente
-app.get('/api/cadastro_clientes', (req, res) => {
-  connection.query('SELECT * FROM cadastro_cliente', (error, results) => {
-    if (error) throw error;
-    res.json(results);
-  });
-});
-
-app.post('/api/cadastro_clientes', (req, res) => {
-  const { nome_cliente, tel_cliente } = req.body;
-  connection.query('INSERT INTO cadastro_cliente (nome_cliente, tel_cliente) VALUES (?, ?)', [nome_cliente, tel_cliente], (error) => {
-    if (error) throw error;
-    res.status(201).send('Cadastro de cliente adicionado com sucesso');
-  });
-});
-
-app.put('/api/cadastro_clientes/:cod_cadastro', (req, res) => {
-  const { cod_cadastro } = req.params;
-  const { nome_cliente, tel_cliente } = req.body;
-  connection.query('UPDATE cadastro_cliente SET nome_cliente = ?, tel_cliente = ? WHERE cod_cadastro = ?', [nome_cliente, tel_cliente, cod_cadastro], (error) => {
-    if (error) throw error;
-    res.send('Cadastro de cliente atualizado com sucesso');
-  });
-});
-
-app.delete('/api/cadastro_clientes/:cod_cadastro', (req, res) => {
-  const { cod_cadastro } = req.params;
-  connection.query('DELETE FROM cadastro_cliente WHERE cod_cadastro = ?', [cod_cadastro], (error) => {
-    if (error) throw error;
-    res.send('Cadastro de cliente deletado com sucesso');
-  });
-});
-
-// Rotas para a tabela livro
-app.get('/api/livros', (req, res) => {
-  connection.query('SELECT * FROM livro', (error, results) => {
-    if (error) throw error;
-    res.json(results);
-  });
-});
-
-app.post('/api/livros', (req, res) => {
-  const { nome_livro, autor_livro } = req.body;
-  connection.query('INSERT INTO livro (nome_livro, autor_livro) VALUES (?, ?)', [nome_livro, autor_livro], (error) => {
-    if (error) throw error;
-    res.status(201).send('Livro adicionado com sucesso');
-  });
-});
-
-app.put('/api/livros/:id_livro', (req, res) => {
-  const { id_livro } = req.params;
-  const { nome_livro, autor_livro } = req.body;
-  connection.query('UPDATE livro SET nome_livro = ?, autor_livro = ? WHERE id_livro = ?', [nome_livro, autor_livro, id_livro], (error) => {
-    if (error) throw error;
-    res.send('Livro atualizado com sucesso');
-  });
-});
-
-app.delete('/api/livros/:id_livro', (req, res) => {
-  const { id_livro } = req.params;
-  connection.query('DELETE FROM livro WHERE id_livro = ?', [id_livro], (error) => {
-    if (error) throw error;
-    res.send('Livro deletado com sucesso');
-  });
-});
-
-// Rotas para a tabela reserva
-app.get('/api/reservas', (req, res) => {
-  connection.query('SELECT * FROM reserva', (error, results) => {
-    if (error) throw error;
-    res.json(results);
-  });
-});
-
-app.post('/api/reservas', (req, res) => {
-  const { nome_cliente, cod_cliente, data_reserva, data_devol } = req.body;
-  connection.query('INSERT INTO reserva (nome_cliente, cod_cliente, data_reserva, data_devol) VALUES (?, ?, ?, ?)', [nome_cliente, cod_cliente, data_reserva, data_devol], (error) => {
-    if (error) throw error;
-    res.status(201).send('Reserva adicionada com sucesso');
-  });
-});
-
-app.put('/api/reservas/:num_reserva', (req, res) => {
-  const { num_reserva } = req.params;
-  const { nome_cliente, cod_cliente, data_reserva, data_devol } = req.body;
-  connection.query('UPDATE reserva SET nome_cliente = ?, cod_cliente = ?, data_reserva = ?, data_devol = ? WHERE num_reserva = ?', [nome_cliente, cod_cliente, data_reserva, data_devol, num_reserva], (error) => {
-    if (error) throw error;
-    res.send('Reserva atualizada com sucesso');
-  });
-});
-
-app.delete('/api/reservas/:num_reserva', (req, res) => {
-  const { num_reserva } = req.params;
-  connection.query('DELETE FROM reserva WHERE num_reserva = ?', [num_reserva], (error) => {
-    if (error) throw error;
-    res.send('Reserva deletada com sucesso');
-  });
-});
-
-// Rotas para a tabela pega_emprestado
-app.get('/api/pega_emprestados', (req, res) => {
-  connection.query('SELECT * FROM pega_emprestado', (error, results) => {
-    if (error) throw error;
-    res.json(results);
-  });
-});
-
-app.post('/api/pega_emprestados', (req, res) => {
-  const { num_reserva, nome_cliente, cod_cliente } = req.body;
-  connection.query('INSERT INTO pega_emprestado (num_reserva, nome_cliente, cod_cliente) VALUES (?, ?, ?)', [num_reserva, nome_cliente, cod_cliente], (error) => {
-    if (error) throw error;
-    res.status(201).send('Pega_emprestado adicionado com sucesso');
-  });
-});
-
-app.put('/api/pega_emprestados/:num_reserva/:nome_cliente/:cod_cliente', (req, res) => {
-  const { num_reserva, nome_cliente, cod_cliente } = req.params;
-  const { novo_num_reserva, novo_nome_cliente, novo_cod_cliente } = req.body;
-  connection.query('UPDATE pega_emprestado SET num_reserva = ?, nome_cliente = ?, cod_cliente = ? WHERE num_reserva = ? AND nome_cliente = ? AND cod_cliente = ?', [novo_num_reserva, novo_nome_cliente, novo_cod_cliente, num_reserva, nome_cliente, cod_cliente], (error) => {
-    if (error) throw error;
-    res.send('Pega_emprestado atualizado com sucesso');
-  });
-});
-
-app.delete('/api/pega_emprestados/:num_reserva/:nome_cliente/:cod_cliente', (req, res) => {
-  const { num_reserva, nome_cliente, cod_cliente } = req.params;
-  connection.query('DELETE FROM pega_emprestado WHERE num_reserva = ? AND nome_cliente = ? AND cod_cliente = ?', [num_reserva, nome_cliente, cod_cliente], (error) => {
-    if (error) throw error;
-    res.send('Pega_emprestado deletado com sucesso');
-  });
-});
-
-// Rotas para a tabela devolucao
-app.get('/api/devolucoes', (req, res) => {
-  connection.query('SELECT * FROM devolucao', (error, results) => {
-    if (error) throw error;
-    res.json(results);
-  });
-});
-
-app.post('/api/devolucoes', (req, res) => {
-  const { num_reserva, nome_cliente, cod_cliente, data_reserva, data_devol } = req.body;
-  connection.query('INSERT INTO devolucao (num_reserva, nome_cliente, cod_cliente, data_reserva, data_devol) VALUES (?, ?, ?, ?, ?)', [num_reserva, nome_cliente, cod_cliente, data_reserva, data_devol], (error) => {
-    if (error) throw error;
-    res.status(201).send('Devolução adicionada com sucesso');
-  });
-});
-
-app.put('/api/devolucoes/:num_reserva', (req, res) => {
-  const { num_reserva } = req.params;
-  const { nome_cliente, cod_cliente, data_reserva, data_devol } = req.body;
-  connection.query('UPDATE devolucao SET nome_cliente = ?, cod_cliente = ?, data_reserva = ?, data_devol = ? WHERE num_reserva = ?', [nome_cliente, cod_cliente, data_reserva, data_devol, num_reserva], (error) => {
-    if (error) throw error;
-    res.send('Devolução atualizada com sucesso');
-  });
-});
-
-app.delete('/api/devolucoes/:num_reserva', (req, res) => {
-  const { num_reserva } = req.params;
-  connection.query('DELETE FROM devolucao WHERE num_reserva = ?', [num_reserva], (error) => {
-    if (error) throw error;
-    res.send('Devolução deletada com sucesso');
-  });
-});
-
-app.listen(3000, () => {
-  console.log('Servidor rodando na porta 3000');
+// Inicia o servidor
+const PORT = 3000;
+app.listen(PORT, () => {
+  console.log(`Servidor rodando na porta ${PORT}`);
 });
