@@ -6,9 +6,9 @@ const app = express();
 app.use(bodyParser.json());
 
 const connection = mysql.createConnection({
-  host: '',
+  host: 'localhost',
   user: '',
-  password: 'sua_senha',
+  password: '',
   database: 'alubook'
 });
 
