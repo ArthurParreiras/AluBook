@@ -7,10 +7,6 @@
     <title>Cadastrar cliente</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="criarcliente.css">
-    <style>
-      
-        
-    </style>
 </head>
 
 <body>
@@ -25,7 +21,7 @@
     <div class="cadastro-container">
         <div class="cadastro-form">
             <h2>CRIAR NOVO CLIENTE</h2>
-            <form class="inputs" action="/submit-your-form-handler" method="POST">
+            <form id="criarClienteForm" class="inputs" action="/submit-your-form-handler" method="POST">
                 <input type="text" placeholder="Nome" name="nome" required>
                 <input type="tel" placeholder="Telefone" name="telefone" required>
                 <input type="text" placeholder="CPF" name="cpf" required>
@@ -44,6 +40,35 @@
             <p>alubook@gmail.com <br>(31) 9 1234-5678</p>
         </div>
     </div>
+
+    <script>
+        document.getElementById('criarClienteForm').addEventListener('submit', function(event) {
+            event.preventDefault(); 
+
+            const form = event.target;
+            const formData = new FormData(form);
+
+            const dados = {
+                nome: formData.get('nome'),
+                telefone: formData.get('telefone'),
+                cpf: formData.get('cpf')
+            };
+
+            criarCliente(dados);
+        });
+
+        function criarCliente(dados) {
+            console.log('Dados do cliente:', dados);
+
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    document.getElementById('criarClienteForm').reset(); 
+                    resolve({ success: true });
+                }, 1000);
+            });
+        }
+    </script>
 </body>
 
 </html>
+
