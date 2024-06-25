@@ -1,43 +1,44 @@
 const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
+const cors = require('cors');
+const path = require('path');
 
 const app = express();
 const port = 3000;
 
-// Middleware para configurar cabeçalhos CORS
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  next();
-});
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// Cria uma conexão com o banco de dados SQLite
-const db = new sqlite3.Database('alubook.db', (err) => {
-  if (err) {
-    console.error('Erro ao abrir o banco de dados:', err.message);
-  } else {
-    console.log('Conexão estabelecida com sucesso ao banco de dados SQLite');
-  }
-});
+const dbPath = path.resolve(__dirname, 'db', 'alubook.db');
 
-// Rota para consultar cliente por CPF
-app.get('/consultar-cliente/:cpf', (req, res) => {
-  const cpfCliente = req.params.cpf;
-
-  const query = 'SELECT * FROM cliente WHERE cpf_cliente = ?';
-  db.get(query, [cpfCliente], (err, row) => {
+const db = new sqlite3.Database(dbPath, (err) => {
     if (err) {
-      console.error('Erro ao consultar cliente:', err.message);
-      res.status(500).json({ error: 'Erro ao consultar cliente' });
+        console.error('Erro ao conectar ao banco de dados SQLite:', err.message);
     } else {
-      res.status(200).json(row);
+        console.log('Conectado ao banco de dados SQLite.');
     }
-  });
 });
 
-// Inicia o servidor
-app.listen(port, () => {
-  console.log(`Servidor rodando em http://localhost:${port}`);
+// Rota para consultar um cliente pelo CPF
+app.get('/consultar-cliente/:cpf', (req, res) => {
+    const cpf = req.params.cpf;
+    const sql = 'SELECT * FROM cliente WHERE cpf_cliente = ?';
+
+    db.get(sql, [cpf], (err, row) => {
+        if (err) {
+            console.error('Erro ao consultar cliente:', err.message);
+            res.status(500).json({ error: 'Erro ao consultar cliente' });
+        } else if (!row) {
+            res.status(404).json({ error: 'Cliente não encontrado' });
+        } else {
+            res.json(row);
+        }
+    });
 });
+
+app.listen(port, () => {
+    console.log(`Servidor rodando em http://localhost:${port}`);
+});
+
 
