@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +7,6 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="criarcliente.css">
 </head>
-
 <body>
     <header>
         <div class="user-bar">
@@ -41,34 +39,8 @@
         </div>
     </div>
 
-    <script>
-        document.getElementById('criarClienteForm').addEventListener('submit', function(event) {
-            event.preventDefault(); 
-
-            const form = event.target;
-            const formData = new FormData(form);
-
-            const dados = {
-                nome: formData.get('nome'),
-                telefone: formData.get('telefone'),
-                cpf: formData.get('cpf')
-            };
-
-            criarCliente(dados);
-        });
-
-        function criarCliente(dados) {
-            console.log('Dados do cliente:', dados);
-
-            return new Promise((resolve, reject) => {
-                setTimeout(() => {
-                    document.getElementById('criarClienteForm').reset(); 
-                    resolve({ success: true });
-                }, 1000);
-            });
-        }
-    </script>
+    <script src="criarCliente.js"></script>
 </body>
-
 </html>
+
 
