@@ -1,7 +1,6 @@
 const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
 const cors = require('cors');
-const path = require('path');
 
 const app = express();
 const port = 3000;
@@ -42,8 +41,12 @@ app.post('/criar-cliente', (req, res) => {
     const sql = `INSERT INTO clientes (nome_cliente, tel_cliente, cpf_cliente) VALUES (?, ?, ?)`;
     db.run(sql, [nome, telefone, cpf], function (err) {
         if (err) {
-            console.error('Erro ao inserir cliente:', err.message);
-            return res.status(500).json({ error: 'Erro ao criar cliente.' });
+            if (err.code === 'SQLITE_CONSTRAINT' && err.message.includes('UNIQUE constraint failed: clientes.cpf_cliente')) {
+                return res.status(400).json({ error: 'CPF já cadastrado.' });
+            } else {
+                console.error('Erro ao inserir cliente:', err.message);
+                return res.status(500).json({ error: 'Erro ao criar cliente.' });
+            }
         }
         res.status(201).json({ message: 'Cliente criado com sucesso!', id: this.lastID });
     });
@@ -65,10 +68,27 @@ app.get('/consultar-cliente/:cpf', (req, res) => {
     });
 });
 
+// Rota para excluir cliente pelo CPF
+app.delete('/excluir-cliente/:cpf', (req, res) => {
+    const cpf = req.params.cpf;
+    const sql = 'DELETE FROM clientes WHERE cpf_cliente = ?';
+    db.run(sql, [cpf], function (err) {
+        if (err) {
+            console.error('Erro ao excluir cliente:', err.message);
+            return res.status(500).json({ error: 'Erro ao excluir cliente' });
+        }
+        if (this.changes === 0) {
+            return res.status(404).json({ error: 'Cliente não encontrado' });
+        }
+        res.status(200).json({ message: 'Cliente excluído com sucesso!' });
+    });
+});
+
 // Iniciar o servidor
 app.listen(port, () => {
     console.log(`Servidor rodando em http://localhost:${port}`);
 });
+
 
 
 
