@@ -9,7 +9,9 @@ document.addEventListener('DOMContentLoaded', function () {
             autor: formData.get('autor'),
             nomeLivro: formData.get('namelivro'),
             genero: formData.get('genlivro'),
-            idLivro: formData.get('idlivro')
+            idLivro: formData.get('idlivro'),
+            anoLivro: formData.get('anoLivro'),
+            qtdLivros: formData.get('qtdLivros')
         };
 
         fetch('http://localhost:3000/livros', {
@@ -34,5 +36,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+
 
 

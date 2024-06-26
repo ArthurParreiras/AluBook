@@ -25,9 +25,9 @@ CREATE TABLE livros (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     autor TEXT,
     nome_livro TEXT,
-    ano INTEGER,        
+    anoLivro INTEGER,        
     genlivro TEXT,
-    quantidade INTEGER  
+    qtdLivros INTEGER  
 );
 
 

@@ -4,10 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cadastrar livros</title>
-<link rel="stylesheet" href="cadastrarUsuario.css">
+<link rel="stylesheet" href="cadastrarLivro.css">
 <link rel="stylesheet" href="style.css">
-<script src="excluirCliente.js" defer></script>
-
+<script src="cadastrarLivro.js" defer></script> <!-- Inclui o script aqui -->
 </head>
 <body>
     <header>
@@ -20,11 +19,13 @@
 <div class="login-container">
     <div class="login-form">
         <h2>CADASTRO DE LIVRO</h2>
-        <form class="inputs" action="/submit-your-form-handler" method="POST">
+        <form class="inputs">
             <input type="text" placeholder="NOME DO AUTOR" name="autor" required>
             <input type="text" placeholder="NOME DO LIVRO" name="namelivro" required>
             <input type="text" placeholder="GÊNERO DO LIVRO" name="genlivro" required>
             <input type="text" placeholder="ID DO LIVRO" name="idlivro" required>
+            <input type="text" placeholder="ANO DO LIVRO" name="anoLivro" required>
+            <input type="text" placeholder="QUANTIDADE DE LIVROS" name="qtdLivros" required>
             <button type="submit">CADASTRAR</button>
         </form>
     </div>
@@ -41,3 +42,4 @@
 </div>
 </body>
 </html>
+

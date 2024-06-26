@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 tr.appendChild(tdAutor);
 
                 const tdAno = document.createElement('td');
-                tdAno.textContent = livro.ano;
+                tdAno.textContent = livro.anoLivro;
                 tr.appendChild(tdAno);
 
                 const tdGenero = document.createElement('td');
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 tr.appendChild(tdGenero);
 
                 const tdQuantidade = document.createElement('td');
-                tdQuantidade.textContent = livro.quantidade;
+                tdQuantidade.textContent = livro.qtdLivros;
                 tr.appendChild(tdQuantidade);
                 
                 tbody.appendChild(tr);

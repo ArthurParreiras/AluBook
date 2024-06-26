@@ -59,23 +59,25 @@ app.delete('/clientes/:cpf', (req, res) => {
     });
 });
 
+
+
 // Criação da tabela de livros (se não existir)
 db.run(`CREATE TABLE IF NOT EXISTS livros (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     autor TEXT NOT NULL,
     nome_livro TEXT NOT NULL,
     genero TEXT NOT NULL,
-    ano INTEGER NOT NULL,
-    quantidade INTEGER NOT NULL,
+    anoLivro INTEGER NOT NULL,
+    qtdLivros INTEGER NOT NULL,
     id_livro TEXT NOT NULL UNIQUE
 )`);
 
 // Rota para cadastrar um livro
 app.post('/livros', (req, res) => {
-    const { autor, nomeLivro, genero, idLivro } = req.body;
+    const { autor, nomeLivro, genero, idLivro, anoLivro, qtdLivros } = req.body;
 
-    const sql = `INSERT INTO livros (autor, nome_livro, genero, id_livro) VALUES (?, ?, ?, ?)`;
-    const params = [autor, nomeLivro, genero, idLivro];
+    const sql = `INSERT INTO livros (autor, nome_livro, genero, id_livro, anoLivro, qtdLivros) VALUES (?, ?, ?, ?, ?, ?)`;
+    const params = [autor, nomeLivro, genero, idLivro, anoLivro, qtdLivros];
 
     db.run(sql, params, function(err) {
         if (err) {
