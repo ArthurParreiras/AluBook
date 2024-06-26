@@ -85,6 +85,24 @@ app.post('/livros', (req, res) => {
     });
 });
 
+// Rota para excluir um livro pelo ID
+app.delete('/livros/:id', (req, res) => {
+    const idLivro = req.params.id;
+    
+    db.run('DELETE FROM livros WHERE id_livro = ?', [idLivro], function(err) {
+        if (err) {
+            res.json({ success: false, message: 'Erro ao excluir livro.' });
+            return console.error(err.message);
+        }
+        if (this.changes === 0) {
+            res.json({ success: false, message: 'Livro não encontrado.' });
+        } else {
+            res.json({ success: true, message: 'Livro excluído com sucesso.' });
+        }
+    });
+});
+
+
 app.listen(port, () => {
     console.log(`Servidor rodando em http://localhost:${port}`);
 });
