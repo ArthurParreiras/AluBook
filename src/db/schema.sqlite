@@ -21,11 +21,15 @@ CREATE TABLE cadastro_cliente (
     FOREIGN KEY (tel_cliente) REFERENCES cliente(tel_cliente)
 );
 
-CREATE TABLE livro (
-    id_livro INT AUTO_INCREMENT PRIMARY KEY,
-    nome_livro VARCHAR(100),
-    autor_livro VARCHAR(100)
+CREATE TABLE livros (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    autor TEXT,
+    nome_livro TEXT,
+    ano INTEGER,        
+    genlivro TEXT,
+    quantidade INTEGER  
 );
+
 
 CREATE TABLE reserva (
     num_reserva INT AUTO_INCREMENT PRIMARY KEY,

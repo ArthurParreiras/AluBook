@@ -65,6 +65,8 @@ db.run(`CREATE TABLE IF NOT EXISTS livros (
     autor TEXT NOT NULL,
     nome_livro TEXT NOT NULL,
     genero TEXT NOT NULL,
+    ano INTEGER NOT NULL,
+    quantidade INTEGER NOT NULL,
     id_livro TEXT NOT NULL UNIQUE
 )`);
 
@@ -101,6 +103,21 @@ app.delete('/livros/:id', (req, res) => {
         }
     });
 });
+
+// Rota para obter todos os livros
+app.get('/livros', (req, res) => {
+    db.all('SELECT * FROM livros', [], (err, rows) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+            return;
+        }
+        res.json(rows);
+    });
+});
+
+
+
+
 
 
 app.listen(port, () => {

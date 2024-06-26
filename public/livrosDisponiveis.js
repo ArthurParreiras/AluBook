@@ -1,44 +1,38 @@
-    
-    document.addEventListener('DOMContentLoaded', () => {
-    let currentPage = 1;
-  
-    const fetchBooks = (page) => {
-      fetch(`http://localhost:3000/books?page=${page}`)
+document.addEventListener('DOMContentLoaded', function () {
+    fetch('http://localhost:3000/livros')
         .then(response => response.json())
         .then(data => {
-          displayBooks(data);
+            const tbody = document.getElementById('livros-tbody');
+            data.forEach(livro => {
+                const tr = document.createElement('tr');
+                
+                const tdNome = document.createElement('td');
+                tdNome.textContent = livro.nome_livro;
+                tr.appendChild(tdNome);
+                
+                const tdAutor = document.createElement('td');
+                tdAutor.textContent = livro.autor;
+                tr.appendChild(tdAutor);
+
+                const tdAno = document.createElement('td');
+                tdAno.textContent = livro.ano;
+                tr.appendChild(tdAno);
+
+                const tdGenero = document.createElement('td');
+                tdGenero.textContent = livro.genero;
+                tr.appendChild(tdGenero);
+
+                const tdQuantidade = document.createElement('td');
+                tdQuantidade.textContent = livro.quantidade;
+                tr.appendChild(tdQuantidade);
+                
+                tbody.appendChild(tr);
+            });
         })
-        .catch(error => console.error('Error fetching books:', error));
-    };
-  
-    const displayBooks = (books) => {
-      const tbody = document.querySelector('.display-livros tbody');
-      tbody.innerHTML = '';
-  
-      books.forEach(book => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td>${book.nome}</td>
-          <td>${book.autor}</td>
-          <td>${book.ano}</td>
-          <td>${book.genero}</td>
-          <td>${book.quantidade}</td>
-        `;
-        tbody.appendChild(row);
-      });
-    };
-  
-    document.querySelector('#nextPage').addEventListener('click', () => {
-      currentPage++;
-      fetchBooks(currentPage);
-    });
-  
-    document.querySelector('#prevPage').addEventListener('click', () => {
-      if (currentPage > 1) {
-        currentPage--;
-        fetchBooks(currentPage);
-      }
-    });
-  
-    fetchBooks(currentPage);
-  });
+        .catch(error => {
+            console.error('Erro ao carregar os dados dos livros:', error);
+        });
+});
+
+
+
