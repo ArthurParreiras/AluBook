@@ -33,3 +33,6 @@ document.getElementById('criarClienteForm').addEventListener('submit', async fun
         alert('Erro ao criar cliente.');
     }
 });
+
+
+

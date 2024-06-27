@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
           }
 
           const cliente = await response.json();
-          alert(`Cliente encontrado: ${cliente.nome_cliente}, Telefone: ${cliente.tel_cliente}`);
+          alert(`Cliente encontrado: ${cliente.nome}, Telefone: ${cliente.telefone}`);
       } catch (error) {
           console.error('Erro ao consultar cliente:', error);
           alert('Erro ao consultar cliente');

@@ -1,33 +1,48 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const form = document.querySelector('.inputs');
+document.addEventListener("DOMContentLoaded", () => {
+    const form = document.querySelector("form");
     
-    form.addEventListener('submit', function(event) {
-        event.preventDefault(); // Impede o envio do formulário
+    form.addEventListener("submit", async (event) => {
+        event.preventDefault();
         
-        // Obter valores dos campos do formulário
-        const nomeLivro = form.querySelector('input[name="nome"]').value;
-        const idLivro = form.querySelector('input[name="username"]').value;
-        const autor = form.querySelector('input[name="password"]').value;
-        const cpfCliente = form.querySelector('input[name="password"]').value;
-        const data = form.querySelector('input[name="password"]').value;
-        
-        // Validar campos
-        if (!nomeLivro || !idLivro || !autor || !cpfCliente || !data) {
-            alert('Por favor, preencha todos os campos.');
-            return;
+        const nomeLivro = form.nome.value;
+        const idLivro = form.username.value;
+        const autor = form.password.value;
+        const cpfCliente = form.password.value;
+        const data = form.password.value;
+
+        // Verificação dos campos
+        try {
+            const response = await fetch('/api/verify', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ nomeLivro, idLivro, autor, cpfCliente })
+            });
+
+            const result = await response.json();
+
+            if (result.error) {
+                alert(result.error);
+            } else {
+                const response = await fetch('/api/aluguel', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ nomeLivro, idLivro, autor, cpfCliente, data })
+                });
+                
+                if (response.ok) {
+                    alert('Empréstimo cadastrado com sucesso');
+                } else {
+                    alert('Erro ao cadastrar o empréstimo');
+                }
+            }
+        } catch (error) {
+            console.error('Erro:', error);
+            alert('Erro ao verificar os dados do formulário');
         }
-        
-        // Validar CPF (básico, apenas para formato)
-        if (!/^\d{11}$/.test(cpfCliente)) {
-            alert('CPF inválido. Deve conter 11 dígitos.');
-            return;
-        }
-        
-        // Se a validação passar, processar os dados (ex: enviar para o servidor)
-        // Aqui você pode adicionar a lógica para enviar os dados para o servidor ou armazená-los localmente
-        alert('Empréstimo cadastrado com sucesso!');
-        
-        // Redefinir formulário após o envio bem-sucedido
-        form.reset();
     });
 });
+

@@ -17,6 +17,7 @@ const db = new sqlite3.Database('./database.db', (err) => {
     }
 });
 
+
 // Criação da tabela de clientes (se não existir)
 db.run(`CREATE TABLE IF NOT EXISTS clientes (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -26,40 +27,56 @@ db.run(`CREATE TABLE IF NOT EXISTS clientes (
 )`);
 
 // Rota para criar um novo cliente
-app.post('/clientes', (req, res) => {
+app.post('/criar-cliente', (req, res) => {
     const { nome, telefone, cpf } = req.body;
 
+    if (!nome || !telefone || !cpf) {
+        return res.status(400).json({ error: 'Todos os campos são obrigatórios.' });
+    }
+
     const sql = `INSERT INTO clientes (nome, telefone, cpf) VALUES (?, ?, ?)`;
-    const params = [nome, telefone, cpf];
-
-    db.run(sql, params, function(err) {
+    db.run(sql, [nome, telefone, cpf], function (err) {
         if (err) {
-            console.error('Erro ao inserir cliente', err);
-            res.status(400).json({ success: false, message: 'Erro ao cadastrar cliente. ' + err.message });
-        } else {
-            res.json({ success: true, message: 'Cliente cadastrado com sucesso!' });
+            console.error('Erro ao inserir cliente:', err.message);
+            return res.status(500).json({ error: 'Erro ao criar cliente.' });
         }
+        res.status(201).json({ message: 'Cliente criado com sucesso!', id: this.lastID });
     });
 });
 
-// Rota para excluir um cliente
-app.delete('/clientes/:cpf', (req, res) => {
-    const { cpf } = req.params;
-
-    const sql = `DELETE FROM clientes WHERE cpf = ?`;
-    const params = [cpf];
-
-    db.run(sql, params, function(err) {
+// Rota para excluir cliente pelo CPF
+app.delete('/excluir-cliente/:cpf', (req, res) => {
+    const cpf = req.params.cpf;
+    const sql = 'DELETE FROM clientes WHERE cpf = ?';
+    db.run(sql, [cpf], function (err) {
         if (err) {
-            console.error('Erro ao excluir cliente', err);
-            res.status(400).json({ success: false, message: 'Erro ao excluir cliente. ' + err.message });
-        } else {
-            res.json({ success: true, message: 'Cliente excluído com sucesso!' });
+            console.error('Erro ao excluir cliente:', err.message);
+            return res.status(500).json({ error: 'Erro ao excluir cliente' });
         }
+        if (this.changes === 0) {
+            return res.status(404).json({ error: 'Cliente não encontrado' });
+        }
+        res.status(200).json({ message: 'Cliente excluído com sucesso!' });
     });
 });
 
 
+// Rota para consultar um cliente pelo CPF
+app.get('/consultar-cliente/:cpf', (req, res) => {
+    const cpf = req.params.cpf;
+    const sql = 'SELECT * FROM clientes WHERE cpf = ?';
+
+    db.get(sql, [cpf], (err, row) => {
+        if (err) {
+            console.error('Erro ao consultar cliente:', err.message);
+            res.status(500).json({ error: 'Erro ao consultar cliente' });
+        } else if (!row) {
+            res.status(404).json({ error: 'Cliente não encontrado' });
+        } else {
+            res.json(row);
+        }
+    });
+});
 
 // Criação da tabela de livros (se não existir)
 db.run(`CREATE TABLE IF NOT EXISTS livros (
