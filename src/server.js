@@ -134,13 +134,52 @@ app.get('/livros', (req, res) => {
     });
 });
 
+// Criação da tabela de empréstimos (se não existir)
+db.run(`CREATE TABLE IF NOT EXISTS emprestimo (
+    idEmprestimo INTEGER PRIMARY KEY AUTOINCREMENT,
+    nomeCliente TEXT NOT NULL,
+    nomeLivro TEXT NOT NULL
+)`);
+
+// Rota para criar um novo empréstimo
+app.post('/criar-emprestimo', (req, res) => {
+    const { idEmprestimo, nomeCliente, nomeLivro } = req.body;
+
+    if (!idEmprestimo || !nomeCliente || !nomeLivro) {
+        return res.status(400).json({ error: 'Todos os campos são obrigatórios.' });
+    }
+
+    const sql = `INSERT INTO emprestimo (idEmprestimo, nomeCliente, nomeLivro) VALUES (?, ?, ?)`;
+    db.run(sql, [idEmprestimo, nomeCliente, nomeLivro], function (err) {
+        if (err) {
+            console.error('Erro ao inserir empréstimo:', err.message);
+            return res.status(500).json({ error: 'Erro ao criar empréstimo.' });
+        }
+        res.status(201).json({ message: 'Empréstimo criado com sucesso!', id: this.lastID });
+    });
+});
+
+// Rota para excluir empréstimo pelo ID
+app.delete('/excluir-emprestimo/:idEmprestimo', (req, res) => {
+    const idEmprestimo = req.params.idEmprestimo;
+    const sql = 'DELETE FROM emprestimo WHERE idEmprestimo = ?';
+    db.run(sql, [idEmprestimo], function (err) {
+        if (err) {
+            console.error('Erro ao excluir empréstimo:', err.message);
+            return res.status(500).json({ error: 'Erro ao excluir empréstimo' });
+        }
+        if (this.changes === 0) {
+            return res.status(404).json({ error: 'Empréstimo não encontrado' });
+        }
+        res.status(200).json({ message: 'Empréstimo excluído com sucesso!' });
+    });
+});
 
 
 
-
-
-app.listen(port, () => {
-    console.log(`Servidor rodando em http://localhost:${port}`);
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Servidor rodando na porta ${PORT}`);
 });
 
 

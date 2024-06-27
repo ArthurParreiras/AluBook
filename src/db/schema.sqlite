@@ -30,34 +30,9 @@ CREATE TABLE livros (
     qtdLivros INTEGER  
 );
 
-
-CREATE TABLE reserva (
-    num_reserva INT AUTO_INCREMENT PRIMARY KEY,
-    nome_cliente VARCHAR(100),
-    cod_cliente INT,
-    data_reserva DATE,
-    data_devol DATE,
-    FOREIGN KEY (nome_cliente) REFERENCES cliente(nome_cliente),
-    FOREIGN KEY (cod_cliente) REFERENCES cliente(cpf_cliente)
+CREATE TABLE emprestimo (
+    idEmprestimo INTEGER PRIMARY KEY AUTOINCREMENT,
+    nomeCliente TEXT NOT NULL,
+    nomeLivro TEXT NOT NULL
 );
 
-CREATE TABLE pega_emprestado (
-    num_reserva INT,
-    nome_cliente VARCHAR(100),
-    cod_cliente INT,
-    PRIMARY KEY (num_reserva, nome_cliente, cod_cliente),
-    FOREIGN KEY (num_reserva) REFERENCES reserva(num_reserva),
-    FOREIGN KEY (nome_cliente) REFERENCES cliente(nome_cliente),
-    FOREIGN KEY (cod_cliente) REFERENCES cliente(cpf_cliente)
-);
-
-CREATE TABLE devolucao (
-    num_reserva INT PRIMARY KEY,
-    nome_cliente VARCHAR(100),
-    cod_cliente INT,
-    data_reserva DATE,
-    data_devol DATE,
-    FOREIGN KEY (num_reserva) REFERENCES reserva(num_reserva),
-    FOREIGN KEY (nome_cliente) REFERENCES cliente(nome_cliente),
-    FOREIGN KEY (cod_cliente) REFERENCES cliente(cpf_cliente)
-);

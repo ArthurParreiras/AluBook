@@ -10,36 +10,46 @@
 <body>
     <header>
         <div class="user-bar">
-            <span class="label-user">Usuário:</span> <span id="username"> Arthur Parreiras</span>
+            <span class="label-user">Usuário:</span> <span id="username">Arthur Parreiras</span>
             <a href="login.html" id="logoutButton" class="button">Sair</a>
         </div>
     </header>
-        <div class="background-image"></div>
+    <div class="background-image"></div>
 
-        <div class="aluguel-container" style="padding-top: 3cm;">
-            <div class="aluguel-form">
-                <h2>CADASTRAR EMPRÉSTIMO</h2>
-                <form class="inputs" action="/submit-your-form-handler" method="POST">
-                    <input type="text" placeholder="ID DO LIVRO" name="username" required>
-                    <input type="number" placeholder="CPF CLIENTE" name="password" required>
-                    <input type="date" placeholder="DATA" name="password" required>
-                    <button type="submit">CADASTRAR</button>
-                </form>  
-            </div>
+    <div class="aluguel-container" style="padding-top: 3cm;">
+        <div class="aluguel-form">
+            <h2>CADASTRAR EMPRÉSTIMO</h2>
+            <form id="criar-emprestimo-form" class="inputs">
+                <input type="text" placeholder="ID DO EMPRÉSTIMO" name="idEmprestimo" required>
+                <input type="text" placeholder="NOME DO CLIENTE" name="nomeCliente" required>
+                <input type="text" placeholder="NOME DO LIVRO" name="nomeLivro" required>
+                <button type="submit">CADASTRAR</button>
+            </form>  
         </div>
-
-<div class="footer">
-    <div class="footer-section">
-        <h3>Endereço</h3>
-        <p>R. Rio Comprido, 4580 - Cinco,<br> Contagem - MG, 32265-450</p>
+        <div class="aluguel-form">
+            <h2>REMOVER EMPRÉSTIMO</h2>
+            <form id="remover-emprestimo-form" class="inputs">
+                <input type="text" placeholder="ID DO EMPRÉSTIMO" name="idEmprestimo" required>
+                <button type="submit">REMOVER</button>
+            </form>  
+        </div>
     </div>
-    <div class="footer-section">
-        <h3>Contatos</h3>
-        <p>alubook@gmail.com <br>(31) 9 1234-5678</p>
-    </div>
-</div>
 
-<script src="aluguelLivro.js"></script>
+    <div class="footer">
+        <div class="footer-section">
+            <h3>Endereço</h3>
+            <p>R. Rio Comprido, 4580 - Cinco,<br> Contagem - MG, 32265-450</p>
+        </div>
+        <div class="footer-section">
+            <h3>Contatos</h3>
+            <p>alubook@gmail.com <br>(31) 9 1234-5678</p>
+        </div>
+    </div>
+
+    <script src="aluguelLivro.js"></script>
 </body>
 </html>
+
+
+
 

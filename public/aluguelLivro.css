@@ -7,29 +7,33 @@
 body, html {
     margin: 0;
     font-family: Arial, sans-serif;
-    height: 100%; /* Garante que o body preencha toda a altura da tela */
-    overflow-x: hidden; /* Evita rolagem horizontal */
+    height: 100%;
+    overflow-x: hidden;
 }
 
 .aluguel-container {
     display: flex;
     justify-content: center;
-    min-height: 100%; /* Altura mínima para preencher a tela inicial */
-    padding: 20px; /* Espaço interno */
+    min-height: 100%;
+    padding: 20px;
     box-sizing: border-box;
     height: 100%;
-    align-items: flex-start; /* Alinha os itens ao início do container */
+    align-items: flex-start;
 }
 
+.form-wrapper {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
 
 .aluguel-form {
     background-color: rgb(247, 247, 247);
     padding: 20px;
     border-radius: 40px;
-    width: 400px;
+    width: 45%;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
     text-align: center;
-    margin-top: 3%;
 }
 
 .aluguel-form h2 {
@@ -38,11 +42,7 @@ body, html {
     font-size: 25px;
 }
 
-.inputs{
-    margin-top: 15%;
-}
-
-input{
+input {
     width: 80%;
     padding: 15px;
     margin: 15px 0;
@@ -58,7 +58,6 @@ button {
     font-weight: bold;
     padding: 14px 20px;
     margin: 8px 0;
-
     border-radius: 10px;
     cursor: pointer;
     width: 47%;
@@ -71,34 +70,22 @@ button:hover {
     opacity: 0.8;
 }
 
-.aluguel-links {
-    margin-top: 12%;
-}
-
-.aluguel-links a {
-    text-decoration: none;
-    color: black;
-}
-
-.aluguel-links a:hover {
-    text-decoration: underline;
-}
-
 @media (min-width: 601px) {
-
     body, html {
         overflow-x: hidden;
         height: 100vh;
-        overflow-y: hidden; /* Evita rolagem horizontal */
+        overflow-y: hidden;
     }
 }
 
-/* Mobile Specific Styles */
 @media (max-width: 600px) {
-    .login-container {
-        min-height: 100vh; /* Garante que o container de login cubra a tela inicialmente */
+    .aluguel-container {
+        flex-direction: column;
+        align-items: center;
     }
-    .login-form{
-        margin-top: 25%;
+    .aluguel-form {
+        width: 80%;
+        margin-bottom: 20px;
     }
 }
+
