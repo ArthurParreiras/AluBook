@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastrar cliente</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="criarcliente.css">
+    <link rel="stylesheet" href="cadastrarLivro.css">
 </head>
 <body>
     <header>
@@ -16,14 +16,14 @@
     </header>
     <div class="background-image"></div>
 
-    <div class="cadastro-container">
-        <div class="cadastro-form">
+    <div class="login-container" style="padding-top: 3cm;">
+        <div class="login-form">
             <h2>CRIAR NOVO CLIENTE</h2>
             <form id="criarClienteForm" class="inputs" action="/submit-your-form-handler" method="POST">
                 <input type="text" placeholder="Nome" name="nome" required>
-                <input type="tel" placeholder="Telefone" name="telefone" required>
+                <input type="text" placeholder="Telefone" name="telefone" required>
                 <input type="text" placeholder="CPF" name="cpf" required>
-                <button type="submit" class="btn">CRIAR</button>
+                <button type="submit">CADASTRAR</button>
             </form>
         </div>
     </div>
