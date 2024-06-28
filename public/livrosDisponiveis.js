@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 tr.appendChild(tdAutor);
 
                 const tdAno = document.createElement('td');
-                tdAno.textContent = livro.anoLivro;
+                tdAno.textContent = livro.id;
                 tr.appendChild(tdAno);
 
                 const tdGenero = document.createElement('td');
