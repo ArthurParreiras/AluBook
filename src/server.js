@@ -1,12 +1,20 @@
 const express = require('express');
-const cors = require('cors');
 const sqlite3 = require('sqlite3').verbose();
+const path = require('path');
+const cors = require('cors'); // Importando o pacote cors
 
 const app = express();
 const port = 3000;
 
+// Middleware para habilitar CORS
 app.use(cors());
+
+// Middleware para servir arquivos estáticos
+app.use(express.static(path.join(__dirname, '../public')));
+
+// Middleware para parsear JSON e URL-encoded
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Conectar ao banco de dados SQLite
 const db = new sqlite3.Database('./database.db', (err) => {
@@ -16,7 +24,6 @@ const db = new sqlite3.Database('./database.db', (err) => {
         console.log('Conectado ao banco de dados SQLite');
     }
 });
-
 
 // Criação da tabela de clientes (se não existir)
 db.run(`CREATE TABLE IF NOT EXISTS clientes (
@@ -59,7 +66,6 @@ app.delete('/excluir-cliente/:cpf', (req, res) => {
         res.status(200).json({ message: 'Cliente excluído com sucesso!' });
     });
 });
-
 
 // Rota para consultar um cliente pelo CPF
 app.get('/consultar-cliente/:cpf', (req, res) => {
@@ -135,7 +141,7 @@ app.get('/livros', (req, res) => {
 });
 
 // Criação da tabela de empréstimos (se não existir)
-db.run(`CREATE TABLE IF NOT EXISTS emprestimo (
+db.run(`CREATE TABLE IF NOT EXISTS emprestimos (
     idEmprestimo INTEGER PRIMARY KEY AUTOINCREMENT,
     nomeCliente TEXT NOT NULL,
     nomeLivro TEXT NOT NULL
@@ -143,14 +149,14 @@ db.run(`CREATE TABLE IF NOT EXISTS emprestimo (
 
 // Rota para criar um novo empréstimo
 app.post('/criar-emprestimo', (req, res) => {
-    const { idEmprestimo, nomeCliente, nomeLivro } = req.body;
+    const { nomeCliente, nomeLivro } = req.body;
 
-    if (!idEmprestimo || !nomeCliente || !nomeLivro) {
+    if (!nomeCliente || !nomeLivro) {
         return res.status(400).json({ error: 'Todos os campos são obrigatórios.' });
     }
 
-    const sql = `INSERT INTO emprestimo (idEmprestimo, nomeCliente, nomeLivro) VALUES (?, ?, ?)`;
-    db.run(sql, [idEmprestimo, nomeCliente, nomeLivro], function (err) {
+    const sql = `INSERT INTO emprestimos (nomeCliente, nomeLivro) VALUES (?, ?)`;
+    db.run(sql, [nomeCliente, nomeLivro], function (err) {
         if (err) {
             console.error('Erro ao inserir empréstimo:', err.message);
             return res.status(500).json({ error: 'Erro ao criar empréstimo.' });
@@ -162,7 +168,7 @@ app.post('/criar-emprestimo', (req, res) => {
 // Rota para excluir empréstimo pelo ID
 app.delete('/excluir-emprestimo/:idEmprestimo', (req, res) => {
     const idEmprestimo = req.params.idEmprestimo;
-    const sql = 'DELETE FROM emprestimo WHERE idEmprestimo = ?';
+    const sql = 'DELETE FROM emprestimos WHERE idEmprestimo = ?';
     db.run(sql, [idEmprestimo], function (err) {
         if (err) {
             console.error('Erro ao excluir empréstimo:', err.message);
@@ -175,15 +181,18 @@ app.delete('/excluir-emprestimo/:idEmprestimo', (req, res) => {
     });
 });
 
-
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Servidor rodando na porta ${PORT}`);
+// Rota para obter todos os empréstimos
+app.get('/emprestimos', (req, res) => {
+    db.all('SELECT * FROM emprestimos', [], (err, rows) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+            return;
+        }
+        res.json(rows);
+    });
 });
 
-
-
-
-
+app.listen(port, () => {
+    console.log(`Servidor rodando em http://localhost:${port}`);
+});
 
