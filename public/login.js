@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Verifica se o usuário e senha correspondem ao esperado
-        if (username === 'parreiras' && password === '1234') {
+        if (username === '817343' && password === '1234') {
             // Redireciona para a página menu.html
             window.location.href = 'menu.html';
         } else {
