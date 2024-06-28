@@ -45,6 +45,15 @@ input[type="text"] {
     box-shadow: 5px rgb(255, 255, 255);
     box-sizing: border-box;
 }
+input[type="password"] {
+    width: 80%;
+    padding: 15px;
+    margin: 15px 0;
+    display: inline-block;
+    border: none;
+    box-shadow: 5px rgb(255, 255, 255);
+    box-sizing: border-box;
+}
 
 button {
     background-color: #fcd49c;
