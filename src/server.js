@@ -140,23 +140,24 @@ app.get('/livros', (req, res) => {
     });
 });
 
+
 // Criação da tabela de empréstimos (se não existir)
 db.run(`CREATE TABLE IF NOT EXISTS emprestimos (
-    idEmprestimo INTEGER PRIMARY KEY AUTOINCREMENT,
+    idEmprestimo INTEGER PRIMARY KEY,
     nomeCliente TEXT NOT NULL,
     nomeLivro TEXT NOT NULL
 )`);
 
 // Rota para criar um novo empréstimo
 app.post('/criar-emprestimo', (req, res) => {
-    const { nomeCliente, nomeLivro } = req.body;
+    const { idEmprestimo ,nomeCliente, nomeLivro } = req.body;
 
     if (!nomeCliente || !nomeLivro) {
         return res.status(400).json({ error: 'Todos os campos são obrigatórios.' });
     }
 
-    const sql = `INSERT INTO emprestimos (nomeCliente, nomeLivro) VALUES (?, ?)`;
-    db.run(sql, [nomeCliente, nomeLivro], function (err) {
+    const sql = `INSERT INTO emprestimos (idEmprestimo ,nomeCliente, nomeLivro) VALUES (?, ?, ?)`;
+    db.run(sql, [idEmprestimo, nomeCliente, nomeLivro], function (err) {
         if (err) {
             console.error('Erro ao inserir empréstimo:', err.message);
             return res.status(500).json({ error: 'Erro ao criar empréstimo.' });

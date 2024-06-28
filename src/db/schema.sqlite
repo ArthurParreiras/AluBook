@@ -31,7 +31,7 @@ CREATE TABLE livros (
 );
 
 CREATE TABLE emprestimo (
-    idEmprestimo INTEGER PRIMARY KEY AUTOINCREMENT,
+    idEmprestimo INTEGER PRIMARY KEY,
     nomeCliente TEXT NOT NULL,
     nomeLivro TEXT NOT NULL
 );

@@ -14,36 +14,13 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Chamar função para validar login (exemplo)
-        const loginSuccess = await validateLogin(username, password);
-
-        if (loginSuccess) {
-            // Se o login for bem-sucedido, redirecionar ou mostrar uma mensagem de sucesso
-            alert("Login bem-sucedido!");
-            form.submit();
+        // Verifica se o usuário e senha correspondem ao esperado
+        if (username === 'parreiras' && password === '1234') {
+            // Redireciona para a página menu.html
+            window.location.href = 'menu.html';
         } else {
             alert("Nome de usuário ou senha inválidos.");
         }
     });
-
-    async function validateLogin(username, password) {
-        // Função de validação de login
-        // Esta função deve ser ajustada para conectar ao backend
-
-        // Exemplo de consulta ao backend (ajuste conforme necessário)
-        try {
-            const response = await fetch('/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ username, password })
-            });
-            const result = await response.json();
-            return result.success;
-        } catch (error) {
-            console.error('Erro ao validar o login:', error);
-            return false;
-        }
-    }
 });
+

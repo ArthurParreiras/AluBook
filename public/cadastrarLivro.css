@@ -8,13 +8,14 @@ body, html {
 .login-container {
     display: flex;
     justify-content: center;
-    min-height: 100%; /* Altura mínima para preencher a tela inicial */
+    min-height: calc(100vh - 160px); /* Altura mínima ajustada para deixar espaço para o footer */
     padding: 20px; /* Espaço interno */
     box-sizing: border-box;
     z-index: 2;
-    height: 100%;
     align-items: flex-start; /* Alinha os itens ao início do container */
+    margin-bottom: 100px; /* Espaço entre o .login-container e o footer */
 }
+
 
 .login-form {
     background-color: rgb(247, 247, 247, 0.9);
@@ -23,11 +24,11 @@ body, html {
     width: 400px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
     text-align: center;
-    margin-top: 3%;
+    margin-top: 5%;
 }
 
 .login-form h2 {
-    margin-top: 15%;
+    margin-top: 5%;
     color: #333;
     font-size: 25px;
 }
@@ -110,3 +111,5 @@ button:hover {
 .btn:hover {
     background-color: rgb(30, 187, 30);
 }
+
+
